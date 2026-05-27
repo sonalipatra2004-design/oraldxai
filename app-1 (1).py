@@ -1366,16 +1366,37 @@ def page_about():
     """, unsafe_allow_html=True)
 
     # Project Guide
+    def page_about():
+        if os.path.exists('guide.jpeg'):
+        pil_g = Image.open('guide.jpeg')
+        pil_g = pil_g.resize((150,150))
+        buf_g = BytesIO()
+        pil_g.save(buf_g, format='PNG')
+        b64_g = base64.b64encode(
+            buf_g.getvalue()).decode()
+        guide_photo = (
+            f'<img src="data:image/png;'
+            f'base64,{b64_g}" '
+            f'style="width:120px;height:120px;'
+            f'border-radius:50%;'
+            f'border:3px solid '
+            f'rgba(0,212,255,0.5);'
+            f'margin:0 auto 0.8rem;'
+            f'display:block;">')
+    else:
+        guide_photo = (
+            f'<div style="font-size:4rem;">'
+            f'{guide_photo}</div>')
     st.markdown(
-        '<div class="section-title">'
-        '🎓 Project Guide</div>',
-        unsafe_allow_html=True)
+    '<div class="section-title">'
+    '🎓 Project Guide</div>',
+    unsafe_allow_html=True)
 
     st.markdown(f"""
     <div class="guide-card">
         <div style="font-size:4rem;
                     margin-bottom:0.8rem;">
-            {GUIDE['emoji']}
+            {guide_photo}
         </div>
         <div style="font-family:'Space Grotesk',
                     sans-serif;font-size:1.5rem;
@@ -1402,11 +1423,7 @@ def page_about():
         '👩‍💻 Team Members</div>',
         unsafe_allow_html=True)
 
-    st.info(
-        "💡 Upload your photos to replace "
-        "the emoji avatars! Place photos named: "
-        "sonali.jpeg, jagruti.jpeg, dharitri.jpeg, "
-        "smitarani.jpeg, barsha.jpeg in app folder.")
+    
 
     # Row 1 — first 3 members
     r1cols = st.columns(3)
