@@ -622,7 +622,32 @@ DISEASE_INFO = {
         'color':'#f6e05e'
     },
 }
+# ── Team Photos (base64 encoded) ─────────────────────
+import base64
+from pathlib import Path
 
+def get_photo_base64(filename):
+    """Load photo and convert to base64"""
+    paths = [
+        filename,
+        f'./{filename}',
+        f'/mount/src/dentaldetection-oraldx/{filename}',
+    ]
+    for path in paths:
+        if Path(path).exists():
+            with open(path, 'rb') as f:
+                data = f.read()
+            return base64.b64encode(data).decode()
+    return None
+
+PHOTOS = {
+    'sonali'   : get_photo_base64('sonali.jpeg'),
+    'jagruti'  : get_photo_base64('jagruti.jpeg'),
+    'dharitri' : get_photo_base64('dharitri.jpeg'),
+    'smitarani': get_photo_base64('smitarani.jpeg'),
+    'barsha'   : get_photo_base64('barsha.jpeg'),
+    'guide'    : get_photo_base64('guide.jpeg'),
+}
 TEAM_MEMBERS = [
     {
         'name'   : 'Sonali Patra',
@@ -666,8 +691,8 @@ GUIDE = {
     'designation': 'Associate Professor',
     'dept'       : 'Department of Computer Application',
     'university' : 'ITER, SOA University, Bhubaneswar',
-    'emoji'      : '👨‍🏫'
-    'photo'      : 'guide.jpeg'
+    'emoji'      : '👨‍🏫',
+    'photo'      : 'guide.jpeg',
 }
 
 # ══════════════════════════════════════════════════════
